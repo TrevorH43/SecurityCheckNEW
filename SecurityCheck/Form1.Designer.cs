@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -44,6 +45,8 @@
             this.securityCodeTextBox = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -163,6 +166,7 @@
             this.button12.TabIndex = 11;
             this.button12.Text = "Enter";
             this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // label1
             // 
@@ -179,7 +183,7 @@
             this.securityCodeTextBox.Name = "securityCodeTextBox";
             this.securityCodeTextBox.Size = new System.Drawing.Size(138, 23);
             this.securityCodeTextBox.TabIndex = 13;
-            this.securityCodeTextBox.TextChanged += new System.EventHandler(this.securityCodeTextBox_TextChanged);
+            this.securityCodeTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.securityCodeTextBox_Validating);
             // 
             // textBox2
             // 
@@ -197,6 +201,10 @@
             this.label2.Size = new System.Drawing.Size(66, 15);
             this.label2.TabIndex = 15;
             this.label2.Text = "Access Log";
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
             // 
             // Form1
             // 
@@ -222,6 +230,8 @@
             this.KeyPreview = true;
             this.Name = "Form1";
             this.Text = "Security Panel";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -245,5 +255,6 @@
         private TextBox securityCodeTextBox;
         private TextBox textBox2;
         private Label label2;
+        private ErrorProvider errorProvider1;
     }
 }

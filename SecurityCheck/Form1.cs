@@ -1,3 +1,7 @@
+using System.ComponentModel;
+using System.Text;
+using System.Windows.Forms;
+
 namespace SecurityCheck
 {
     public partial class Form1 : Form
@@ -78,9 +82,56 @@ namespace SecurityCheck
             securityCodeTextBox.Focus();
         }
 
-        private void securityCodeTextBox_TextChanged(object sender, EventArgs e)
+        private void securityCodeTextBox_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if 
+            if (securityCodeTextBox.Text.Length == 0)
+            {
+                errorProvider1.SetError(securityCodeTextBox, "A code is required");
+            }
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            if (this.ValidateSecurityTextBoxes())
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine($"Security: {this.securityCodeTextBox.Text}");
+                MessageBox.Show(sb.ToString(), "Text Entry");
+            }
+            else
+            {
+                MessageBox.Show("Please correct entry errors.", "Entry Errors", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private bool ValidateSecurityTextBoxes(TextBox textBox, string fieldIdentifier, out double? outValue, CancelEventArgs e)
+        {
+            outValue = null;
+            double doubleVal = 0;
+            bool valid = false;
+            if (textBox.Text.Length == 0)
+            {
+                errorProvider1.SetError(textBox, $"{fieldIdentifier}is required.");
+                e.Cancel = true;
+            }
+            else if (double.TryParse(textBox.Text, out doubleVal))
+            {
+                outValue = doubleVal;
+                errorProvider1.SetError(textBox, "");
+                e.Cancel = false;
+                valid = true;
+            }
+            else
+            {
+                errorProvider1.SetError(textBox, $"{fieldIdentifier} must be numeric.");
+                e.Cancel = true;
+            }
+
+            return valid;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.AutoValidate = AutoValidate.Disable;
         }
     }
-}
+  }
